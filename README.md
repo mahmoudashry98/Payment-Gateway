@@ -8,11 +8,10 @@ Payment Gateway  is a Flutter application designed to demonstrate seamless integ
 
 Here are some screenshots of the app in action:
 
-![App Screenshot 1](images/screenshot1.png)
+![App Screenshot 1](![Screenshot_20240227_034933_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/d9da4448-8777-444b-b8fc-f4805cd8eaca)
+)
 
-![App Screenshot 2](images/screenshot2.png)
 
-(Replace `images/screenshot1.png` and `images/screenshot2.png` with the actual paths to your screenshots.)
 
 ## Features
 
