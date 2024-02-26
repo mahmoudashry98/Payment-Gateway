@@ -10,7 +10,9 @@ Here are some screenshots of the app in action:
 
 
 
-App Screenshot  Cart Screen ![Screenshot_20240227_034933_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/d9da4448-8777-444b-b8fc-f4805cd8eaca)
+Cart Screen
+
+ ![Screenshot_20240227_034933_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/d9da4448-8777-444b-b8fc-f4805cd8eaca)
 
 
 
