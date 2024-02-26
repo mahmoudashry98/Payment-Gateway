@@ -31,6 +31,7 @@ Payment Gateway  is a Flutter application designed to demonstrate seamless integ
    flutter pub get
    
 3. (Optional) Configure your payment gateway API keys in the respective files (refer to the Configuration section below).
+
 4. Running the App
 To run the app on your device or emulator, use the following command:
    ```sh
@@ -75,5 +76,5 @@ Project Link: https://github.com/mahmoudashry98/Payment-Gateway.git
 [Payment Gateway API Documentation or any libraries used]
 [Any other resources or acknowledgments]
 
-Make sure to customize the placeholders (e.g., `[Payment Gateway]`, `[specify version]`, `[List of Payment Gateways]`, `[your-repo-url]`, `[your-email@example.com]`, etc.) with the relevant details of your project. This template is designed to be a starting point, so feel free to adjust the sections or add new ones to better fit your project's needs.
+Make sure to customize the placeholders (e.g., `Payment GateWay`, `[specify version]`, `[List of Payment Gateways]`, `[your-repo-url]`, `[your-email@example.com]`, etc.) with the relevant details of your project. This template is designed to be a starting point, so feel free to adjust the sections or add new ones to better fit your project's needs.
 
