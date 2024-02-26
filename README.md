@@ -4,6 +4,16 @@
 
 Payment Gateway  is a Flutter application designed to demonstrate seamless integration with multiple payment gateways. This app serves as a reference for developers looking to implement similar payment functionalities in their Flutter projects. The primary focus is on the backend integration, providing a straightforward, secure, and efficient method for processing payments.
 
+## App Screenshots
+
+Here are some screenshots of the app in action:
+
+![App Screenshot 1](images/screenshot1.png)
+
+![App Screenshot 2](images/screenshot2.png)
+
+(Replace `images/screenshot1.png` and `images/screenshot2.png` with the actual paths to your screenshots.)
+
 ## Features
 
 - Integration with [List of Payment Gateways, e.g., Stripe, PayPal, Paymob].
