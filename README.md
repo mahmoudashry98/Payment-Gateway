@@ -14,6 +14,12 @@ Here are some screenshots of the app in action:
 
  ![Screenshot_20240227_034933_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/d9da4448-8777-444b-b8fc-f4805cd8eaca)
 
+2. ### Payment Details Screen
+
+![Screenshot_20240228_055413_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/081cadf0-cc13-4d2d-941e-4a389b6e139b)
+
+  
+
 
 
 
