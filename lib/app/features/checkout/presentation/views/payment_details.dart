@@ -7,6 +7,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
 import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/payment_method_item.dart';
+import 'package:payment_gateways/app/features/success_payment/presentation/view/success_payment_view.dart';
 
 class PaymentDetailsView extends StatefulWidget {
   const PaymentDetailsView({super.key});
@@ -57,12 +58,12 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SuccessPaymentView(),
+                        ));
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Please fill all fields'),
-                          ),
-                        );
+                        autovalidateMode = AutovalidateMode.always;
+                        setState(() {});
                       }
                     },
                   ),
@@ -143,7 +144,7 @@ class _CustomCreditCardState extends State<CustomCreditCard> {
           padding: 0,
           onCreditCardWidgetChange: (value) {},
         ),
-        CreditCardForm(git 
+        CreditCardForm(
           autovalidateMode: widget.autovalidateMode,
           cardNumber: cardNumber,
           expiryDate: expiryDate,
