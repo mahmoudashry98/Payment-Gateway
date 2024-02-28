@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
+import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/payment_method_item.dart';
 
 class PaymentDetailsView extends StatefulWidget {
@@ -29,30 +30,15 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(images.length, (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          activeIndex = index;
-                        });
-                      },
-                      child: PaymentMethodItem(
-                        image: images[index],
-                        isActive: activeIndex == index,
-                      ),
-                    );
-                  }),
+                _buildPaymentMethods(images),
+                const SizedBox(
+                  height: 20,
                 ),
-                CustomCreditCard(
-                  cardNumber: '',
-                  expiryDate: '',
-                  cardHolderName: '',
-                  cvvCode: '',
-                  onCreditCardModelChange: (p0) {},
-                  formKey: formKey,
-                )
+                const CustomCreditCard(),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomButton(text: 'Pay', onPressed: () {}),
               ],
             ),
           ),
@@ -60,23 +46,33 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
       ),
     );
   }
+
+  Widget _buildPaymentMethods(List<String> images) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: List.generate(
+        images.length,
+        (index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                activeIndex = index;
+              });
+            },
+            child: PaymentMethodItem(
+              image: images[index],
+              isActive: activeIndex == index,
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
 class CustomCreditCard extends StatefulWidget {
-  final String cardNumber;
-  final String expiryDate;
-  final String cardHolderName;
-  final String cvvCode;
-  final Function(CreditCardModel) onCreditCardModelChange;
-  final GlobalKey<FormState> formKey;
   const CustomCreditCard({
     Key? key,
-    required this.cardNumber,
-    required this.expiryDate,
-    required this.cardHolderName,
-    required this.cvvCode,
-    required this.onCreditCardModelChange,
-    required this.formKey,
   }) : super(key: key);
 
   @override
@@ -84,18 +80,44 @@ class CustomCreditCard extends StatefulWidget {
 }
 
 class _CustomCreditCardState extends State<CustomCreditCard> {
+  String cardNumber = '';
+  String expiryDate = '';
+  String cardHolderName = '';
+  String cvvCode = '';
+  bool showBackView = false;
+  final GlobalKey<FormState> formKey = GlobalKey();
+  void onCreditCardModelChange(CreditCardModel creditCardModel) {
+    setState(() {
+      cardNumber = creditCardModel.cardNumber;
+      expiryDate = creditCardModel.expiryDate;
+      cardHolderName = creditCardModel.cardHolderName;
+      cvvCode = creditCardModel.cvvCode;
+      showBackView = creditCardModel.isCvvFocused;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CreditCardForm(
-          cardNumber: widget.cardNumber,
-          expiryDate: widget.expiryDate,
-          cardHolderName: widget.cardHolderName,
-          cvvCode: widget.cvvCode,
-          onCreditCardModelChange: widget.onCreditCardModelChange,
-          formKey: widget.formKey,
+        CreditCardWidget(
+          cardBgColor: Colors.grey,
+          cardNumber: cardNumber,
+          expiryDate: expiryDate,
+          cardHolderName: cardHolderName,
+          cvvCode: cvvCode,
+          showBackView: showBackView,
+          isHolderNameVisible: true,
+          onCreditCardWidgetChange: (value) {},
         ),
+        CreditCardForm(
+          cardNumber: cardNumber,
+          expiryDate: expiryDate,
+          cardHolderName: cardHolderName,
+          cvvCode: cvvCode,
+          onCreditCardModelChange: onCreditCardModelChange,
+          formKey: formKey,
+        )
       ],
     );
   }

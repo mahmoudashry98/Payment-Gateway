@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.buttonColor = Colors.blue, // Default button color
+    this.buttonColor = const Color(0xFF34A853), // Default button color
     this.textColor = Colors.white, // Default text color
   });
 
