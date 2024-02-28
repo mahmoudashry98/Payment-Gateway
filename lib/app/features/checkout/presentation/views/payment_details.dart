@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
@@ -14,8 +16,10 @@ class PaymentDetailsView extends StatefulWidget {
 }
 
 class _PaymentDetailsViewState extends State<PaymentDetailsView> {
-  int activeIndex = 0;
   final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  int activeIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final List<String> images = [
@@ -26,22 +30,46 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
       appBar: customAppBar(context, title: 'Payment Details'),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Form(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildPaymentMethods(images),
-                const SizedBox(
-                  height: 20,
-                ),
-                const CustomCreditCard(),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButton(text: 'Pay', onPressed: () {}),
-              ],
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: _buildPaymentMethods(images),
             ),
-          ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: CustomCreditCard(
+                formKey: formKey,
+                autovalidateMode: autovalidateMode,
+              ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomButton(
+                    text: 'Pay',
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please fill all fields'),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -71,7 +99,11 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
 }
 
 class CustomCreditCard extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final AutovalidateMode autovalidateMode;
   const CustomCreditCard({
+    required this.formKey,
+    required this.autovalidateMode,
     Key? key,
   }) : super(key: key);
 
@@ -85,7 +117,7 @@ class _CustomCreditCardState extends State<CustomCreditCard> {
   String cardHolderName = '';
   String cvvCode = '';
   bool showBackView = false;
-  final GlobalKey<FormState> formKey = GlobalKey();
+
   void onCreditCardModelChange(CreditCardModel creditCardModel) {
     setState(() {
       cardNumber = creditCardModel.cardNumber;
@@ -108,15 +140,17 @@ class _CustomCreditCardState extends State<CustomCreditCard> {
           cvvCode: cvvCode,
           showBackView: showBackView,
           isHolderNameVisible: true,
+          padding: 0,
           onCreditCardWidgetChange: (value) {},
         ),
-        CreditCardForm(
+        CreditCardForm(git 
+          autovalidateMode: widget.autovalidateMode,
           cardNumber: cardNumber,
           expiryDate: expiryDate,
           cardHolderName: cardHolderName,
           cvvCode: cvvCode,
           onCreditCardModelChange: onCreditCardModelChange,
-          formKey: formKey,
+          formKey: widget.formKey,
         )
       ],
     );
