@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_gateways/app/core/utils/styles.dart';
 import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
 import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
+import 'package:payment_gateways/app/core/widgets/payment_medthods_bottom_sheet.dart';
 import 'package:payment_gateways/app/features/cart/presentation/widgets/order_details_widget.dart';
-import 'package:payment_gateways/app/features/checkout/presentation/views/payment_details.dart';
+import 'package:payment_gateways/app/features/checkout/data/model/payment_intent_input_model.dart';
+import 'package:payment_gateways/app/features/checkout/data/repository/checkout_repository_impl.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_states.dart';
+import 'package:payment_gateways/app/features/success_payment/presentation/widgets/success_card.dart';
 
 class MyCartView extends StatelessWidget {
   const MyCartView({super.key});
@@ -15,6 +21,7 @@ class MyCartView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildCartItems(),
@@ -39,15 +46,7 @@ class MyCartView extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            CustomButton(
-              text: 'Complete Payment',
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const PaymentDetailsView(),
-                ));
-              },
-              textColor: Colors.white,
-            )
+            const CustomButtonBlocConsumer()
           ],
         ),
       ),
@@ -62,80 +61,66 @@ class MyCartView extends StatelessWidget {
           width: double.infinity,
           child: Image.asset('assets/images/cart.jpeg'),
         ),
-        Positioned(top: 5, right: 10, child: _buildDetailsItem())
-      ],
-    );
-  }
-
-  Widget _buildDetailsItem() {
-    return Stack(
-      children: [
-        Image.asset(
-          'assets/images/amount_container.png',
-        ),
         Positioned(
-          top: 10,
-          left: 25,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'kinetic Sand Dino\nDig PlaySet',
-                style: Styles.style18,
-                maxLines: 2,
-                overflow: TextOverflow.visible,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              _buildCounterWithPrice()
-            ],
-          ),
-        )
+            top: 5,
+            right: 10,
+            child: BlocProvider(
+              create: (context) => PaymentCubit(CheckOutRepoImpl()),
+              child: const PaymentBottomSheet(),
+            ))
       ],
     );
   }
+}
 
-  Widget _buildCounterWithPrice() {
-    return Row(
-      children: [
-        Container(
-          height: 40,
-          width: 110,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 1),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.remove),
-                onPressed: () {
-                  // Handle minus button press
-                },
-              ),
-              const Text(
-                '5', // Replace with your desired number
-                style: TextStyle(fontSize: 16),
-              ),
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  // Handle plus button press
-                },
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        const Text(
-          '\$ 19.00',
-          style: Styles.styleBold18,
-        ),
-      ],
+class CustomButtonBlocConsumer extends StatelessWidget {
+  const CustomButtonBlocConsumer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<PaymentCubit, PaymentStates>(
+      listener: (context, state) {
+        if (state is PaymentSuccess) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const SuccessCardView(),
+          ));
+        }
+
+        if (state is PaymentFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.paymentFailureMessage),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          isLoading: state is PaymentLoading ? true : false,
+          text: 'Complete Payment',
+          onPressed: () {
+            final PaymentIntentInputModel paymentIntentInputModel = PaymentIntentInputModel(amount: '100', currency: 'USD');
+
+            BlocProvider.of<PaymentCubit>(context)
+                .makePayment(paymentIntentInputModel: paymentIntentInputModel);
+            // showModalBottomSheet(
+            //     isScrollControlled: false,
+            //     context: context,
+            //     shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(16)),
+            //     builder: (context) {
+            //       // return const PaymentDetailsView();
+            //       return BlocProvider(
+            //         create: (context) => PaymentCubit(CheckOutRepoImpl()),
+            //         child: const PaymentBottomSheet(),
+            //       );
+            //     });
+          },
+          textColor: Colors.white,
+        );
+      },
     );
   }
 }
