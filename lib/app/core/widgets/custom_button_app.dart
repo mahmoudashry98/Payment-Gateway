@@ -32,10 +32,12 @@ class CustomButton extends StatelessWidget {
             ),
           ),
         ),
-        child: isLoading? const CircularProgressIndicator() : Text(
-          text,
-          style: Styles.style22.copyWith(color: Colors.white),
-        ),
+        child: isLoading
+            ? const CircularProgressIndicator()
+            : Text(
+                text,
+                style: Styles.style22.copyWith(color: Colors.white),
+              ),
       ),
     );
   }

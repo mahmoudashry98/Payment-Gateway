@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
 import 'package:payment_gateways/app/core/widgets/custom_dish_line.dart';
-import 'package:payment_gateways/app/features/success_payment/presentation/widgets/check_icon.dart';
-import 'package:payment_gateways/app/features/success_payment/presentation/widgets/success_card.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/widgets/check_icon.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/widgets/success_card.dart';
 
 class SuccessPaymentView extends StatelessWidget {
   const SuccessPaymentView({super.key});

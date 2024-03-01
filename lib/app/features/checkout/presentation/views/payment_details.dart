@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
+import 'package:payment_gateways/app/features/checkout/data/model/payment_intent_input_model.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_states.dart';
+import 'package:payment_gateways/app/features/checkout/presentation/views/success_payment_view.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/payment_method_item.dart';
 
 class PaymentDetailsView extends StatefulWidget {
@@ -28,7 +33,7 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
           const SizedBox(
             height: 20,
           ),
-          CustomButton(text: 'Pay', onPressed: () {}),
+          const CustomButtonBlocConsumer(),
         ],
       ),
     );
@@ -53,6 +58,49 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
           );
         },
       ),
+    );
+  }
+}
+
+class CustomButtonBlocConsumer extends StatelessWidget {
+  const CustomButtonBlocConsumer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<PaymentCubit, PaymentStates>(
+      listener: (context, state) {
+        if (state is PaymentSuccess) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const SuccessPaymentView(),
+          ));
+        }
+
+        if (state is PaymentFailure) {
+          Navigator.of(context).pop();
+          SnackBar snackBar =
+              SnackBar(content: Text(state.paymentFailureMessage));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+      builder: (context, state) {
+        return CustomButton(
+          isLoading: state is PaymentLoading ? true : false,
+          text: 'Pay',
+          onPressed: () {
+            final PaymentIntentInputModel paymentIntentInputModel =
+                PaymentIntentInputModel(
+                    amount: '100',
+                    currency: 'USD',
+                    customerId: 'cus_PegTupxxNhENxJ');
+
+            BlocProvider.of<PaymentCubit>(context)
+                .makePayment(paymentIntentInputModel: paymentIntentInputModel);
+          },
+          textColor: Colors.white,
+        );
+      },
     );
   }
 }

@@ -1,9 +1,8 @@
-abstract class Failure{
+abstract class Failure {
   final String message;
   Failure({required this.message});
 }
 
-class ServerFailure extends Failure{
+class ServerFailure extends Failure {
   ServerFailure({required super.message});
-  
 }

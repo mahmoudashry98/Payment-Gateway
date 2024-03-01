@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:payment_gateways/app/core/utils/styles.dart';
 
-class PaymentBottomSheet extends StatelessWidget {
-  const PaymentBottomSheet({super.key});
+class CartItemDetails extends StatelessWidget {
+  const CartItemDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
