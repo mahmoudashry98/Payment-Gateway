@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:payment_gateways/app/core/utils/styles.dart';
-import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
-import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
+import 'package:payment_gateways/app/core/widgets/custom_app_button.dart';
+import 'package:payment_gateways/app/core/widgets/custom_app_bar.dart';
 import 'package:payment_gateways/app/core/widgets/payment_medthods_bottom_sheet.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/views/payment_details.dart';
-import 'package:payment_gateways/app/features/checkout/presentation/widgets/card_info.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/order_details_widget.dart';
-
 import 'package:payment_gateways/app/features/checkout/data/repository/checkout_repository_impl.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
 
-import 'package:payment_gateways/app/features/checkout/presentation/widgets/payment_method_item.dart';
 
 class MyCartView extends StatelessWidget {
   const MyCartView({super.key});
@@ -62,8 +59,6 @@ class MyCartView extends StatelessWidget {
                     });
               },
             ),
-
-            //  CustomButtonBlocConsumer()
           ],
         ),
       ),

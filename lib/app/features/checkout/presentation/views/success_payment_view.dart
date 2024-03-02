@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_gateways/app/core/widgets/custom_appbar.dart';
+import 'package:payment_gateways/app/core/widgets/custom_app_bar.dart';
 import 'package:payment_gateways/app/core/widgets/custom_dish_line.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/check_icon.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/widgets/success_card.dart';

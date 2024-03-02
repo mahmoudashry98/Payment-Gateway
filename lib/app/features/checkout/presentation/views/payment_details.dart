@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:payment_gateways/app/core/widgets/custom_button_app.dart';
+import 'package:payment_gateways/app/core/widgets/custom_app_button.dart';
 import 'package:payment_gateways/app/features/checkout/data/model/payment_intent_input_model.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_states.dart';

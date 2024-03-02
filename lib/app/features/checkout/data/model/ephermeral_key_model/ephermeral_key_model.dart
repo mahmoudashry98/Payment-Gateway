@@ -1,6 +1,6 @@
 import 'associated_object.dart';
 
-class EphermeralKeyModel {
+class EphemeralKeyModel {
   String? id;
   String? object;
   List<AssociatedObject>? associatedObjects;
@@ -9,7 +9,7 @@ class EphermeralKeyModel {
   bool? livemode;
   String? secret;
 
-  EphermeralKeyModel({
+  EphemeralKeyModel({
     this.id,
     this.object,
     this.associatedObjects,
@@ -19,8 +19,8 @@ class EphermeralKeyModel {
     this.secret,
   });
 
-  factory EphermeralKeyModel.fromJson(Map<String, dynamic> json) {
-    return EphermeralKeyModel(
+  factory EphemeralKeyModel.fromJson(Map<String, dynamic> json) {
+    return EphemeralKeyModel(
       id: json['id'] as String?,
       object: json['object'] as String?,
       associatedObjects: (json['associated_objects'] as List<dynamic>?)
