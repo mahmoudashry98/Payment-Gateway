@@ -10,19 +10,16 @@ class PaymentCubit extends Cubit<PaymentStates> {
 
   final CheckOutRepo checkOutRepo;
 
+  static PaymentCubit get(context) => BlocProvider.of<PaymentCubit>(context);
+
   Future makePayment(
       {required PaymentIntentInputModel paymentIntentInputModel}) async {
     emit(PaymentLoading());
-    var data = await checkOutRepo.makePayment(
+    var result = await checkOutRepo.makePayment(
         paymentIntentInputModel: paymentIntentInputModel);
-
-    log('$data');
-
-    data.fold(
+    result.fold(
       (l) => emit(PaymentFailure(paymentFailureMessage: l.message)),
-      (r) => emit(
-        PaymentSuccess(),
-      ),
+      (r) => emit(PaymentSuccess()),
     );
     return;
   }

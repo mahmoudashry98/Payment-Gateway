@@ -69,6 +69,7 @@ class CustomButtonBlocConsumer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paymentCubit = PaymentCubit.get(context);
     return BlocConsumer<PaymentCubit, PaymentStates>(
       listener: (context, state) {
         if (state is PaymentSuccess) {
@@ -95,8 +96,8 @@ class CustomButtonBlocConsumer extends StatelessWidget {
                     currency: 'USD',
                     customerId: 'cus_PegTupxxNhENxJ');
 
-            BlocProvider.of<PaymentCubit>(context)
-                .makePayment(paymentIntentInputModel: paymentIntentInputModel);
+            paymentCubit.makePayment(
+                paymentIntentInputModel: paymentIntentInputModel);
           },
           textColor: Colors.white,
         );

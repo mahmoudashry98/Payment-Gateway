@@ -9,9 +9,8 @@ import 'package:payment_gateways/app/features/checkout/presentation/widgets/orde
 import 'package:payment_gateways/app/features/checkout/data/repository/checkout_repository_impl.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
 
-
 class MyCartView extends StatelessWidget {
-  const MyCartView({super.key});
+  const MyCartView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,41 +23,16 @@ class MyCartView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildCartItems(),
-            const SizedBox(
-              height: 10,
-            ),
-            const OrderDetailsWidget(
-              title: 'Order Subtotal',
-              price: 42.97,
-            ),
-            const OrderDetailsWidget(title: 'Discount', price: 0.00),
-            const OrderDetailsWidget(title: 'Shipping', price: 42.97),
-            const Divider(
-              thickness: 2,
-              height: 15,
-            ),
-            OrderDetailsWidget(
-                title: 'Total',
-                price: 50.76,
+            const SizedBox(height: 10),
+            _buildOrderDetails('Order Subtotal', 42.97),
+            _buildOrderDetails('Discount', 0.00),
+            _buildOrderDetails('Shipping', 42.97),
+            const Divider(thickness: 2, height: 15),
+            _buildOrderDetails('Total', 50.76,
                 textStyle: Styles.style24
                     .copyWith(fontWeight: FontWeight.w600, fontSize: 22)),
-            const SizedBox(
-              height: 15,
-            ),
-            CustomButton(
-              text: 'Complete Payment',
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    builder: (context) {
-                      return BlocProvider(
-                          create: (context) => PaymentCubit(CheckOutRepoImpl()),
-                          child: const PaymentDetailsView());
-                    });
-              },
-            ),
+            const SizedBox(height: 15),
+            _buildCompletePaymentButton(context),
           ],
         ),
       ),
@@ -81,58 +55,32 @@ class MyCartView extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildOrderDetails(String title, double price,
+      {TextStyle? textStyle}) {
+    return OrderDetailsWidget(
+      title: title,
+      price: price,
+      textStyle: textStyle,
+    );
+  }
+
+  Widget _buildCompletePaymentButton(BuildContext context) {
+    return CustomButton(
+      text: 'Complete Payment',
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => PaymentCubit(CheckOutRepoImpl()),
+              child: const PaymentDetailsView(),
+            );
+          },
+        );
+      },
+    );
+  }
 }
-
-// class CustomButtonBlocConsumer extends StatelessWidget {
-//   const CustomButtonBlocConsumer({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocConsumer<PaymentCubit, PaymentStates>(
-//       listener: (context, state) {
-//         if (state is PaymentSuccess) {
-//           Navigator.of(context).pushReplacement(MaterialPageRoute(
-//             builder: (context) => const SuccessCardView(),
-//           ));
-//         }
-
-//         if (state is PaymentFailure) {
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(
-//               content: Text(state.paymentFailureMessage),
-//             ),
-//           );
-//         }
-//       },
-
-//       builder: (context, state) {
-//         return CustomButton(
-//           isLoading: state is PaymentLoading ? true : false,
-//           text: 'Complete Payment',
-//           onPressed: () {
-//             final PaymentIntentInputModel paymentIntentInputModel =
-//                 PaymentIntentInputModel(amount: '100', currency: 'USD');
-
-//             BlocProvider.of<PaymentCubit>(context)
-//                 .makePayment(paymentIntentInputModel: paymentIntentInputModel);
-//             showModalBottomSheet(
-//                 isScrollControlled: false,
-//                 context: context,
-//                 shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16)),
-//                 builder: (context) {
-//                   // return const PaymentDetailsView();
-//                   return BlocProvider(
-//                     create: (context) => PaymentCubit(CheckOutRepoImpl()),
-//                     child: const PaymentBottomSheet(),
-//                   );
-//                 });
-//           },
-//           textColor: Colors.white,
-//         );
-//       },
-//     );
-//   }
-//}
