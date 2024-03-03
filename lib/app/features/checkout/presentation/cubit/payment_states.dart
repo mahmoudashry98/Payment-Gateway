@@ -10,3 +10,5 @@ class PaymentFailure extends PaymentStates {
   final String paymentFailureMessage;
   PaymentFailure({required this.paymentFailureMessage});
 }
+
+class ChangeActiveIndexState extends PaymentStates {}

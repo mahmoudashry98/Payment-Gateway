@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:payment_gateways/app/core/widgets/custom_app_button.dart';
+import 'package:payment_gateways/app/features/checkout/data/model/amount_model.dart';
+import 'package:payment_gateways/app/features/checkout/data/model/item_list_model.dart';
 import 'package:payment_gateways/app/features/checkout/data/model/payment_intent_input_model.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_cubit.dart';
 import 'package:payment_gateways/app/features/checkout/presentation/cubit/payment_states.dart';
@@ -16,8 +18,6 @@ class PaymentDetailsView extends StatefulWidget {
 }
 
 class _PaymentDetailsViewState extends State<PaymentDetailsView> {
-  int activeIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     final List<String> images = [
@@ -40,6 +40,7 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
   }
 
   Widget _buildPaymentMethods(List<String> images) {
+    final paymentCubit = PaymentCubit.get(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(
@@ -48,12 +49,14 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                activeIndex = index;
+                paymentCubit.activeIndex = index;
               });
+
+              print(paymentCubit.activeIndex);
             },
             child: PaymentMethodItem(
               image: images[index],
-              isActive: activeIndex == index,
+              isActive: paymentCubit.activeIndex == index,
             ),
           );
         },
@@ -63,6 +66,7 @@ class _PaymentDetailsViewState extends State<PaymentDetailsView> {
 }
 
 class CustomButtonBlocConsumer extends StatelessWidget {
+  final index = 0;
   const CustomButtonBlocConsumer({
     super.key,
   });
@@ -90,19 +94,50 @@ class CustomButtonBlocConsumer extends StatelessWidget {
           isLoading: state is PaymentLoading ? true : false,
           text: 'Pay',
           onPressed: () {
-            final PaymentIntentInputModel paymentIntentInputModel =
-                PaymentIntentInputModel(
-                    amount: '100',
-                    currency: 'USD',
-                    customerId: 'cus_PegTupxxNhENxJ');
+            if (paymentCubit.activeIndex == 0) {
+              final PaymentIntentInputModel paymentIntentInputModel =
+                  PaymentIntentInputModel(
+                      amount: '100',
+                      currency: 'USD',
+                      customerId: 'cus_PegTupxxNhENxJ');
 
-            paymentCubit.makePayment(
-                paymentIntentInputModel: paymentIntentInputModel);
+              paymentCubit.makePayment(
+                  paymentIntentInputModel: paymentIntentInputModel);
+            } else {
+              var transactionData = getTransactionData();
+              paymentCubit.executePayPalPayment(context, transactionData);
+            }
           },
           textColor: Colors.white,
         );
       },
     );
+  }
+
+  ({AmountModel amount, ItemListModel itemList}) getTransactionData() {
+    var amount = AmountModel(
+      total: "100",
+      currency: "USD",
+      details: Details(shipping: "0", shippingDiscount: 0, subtotal: "100"),
+    );
+    List<OrderItemModel> orders = [
+      OrderItemModel(
+        name: "Apple",
+        quantity: 4,
+        price: '10',
+        currency: "USD",
+      ),
+      OrderItemModel(
+        name: "Pineapple",
+        quantity: 5,
+        price: '12',
+        currency: "USD",
+      ),
+    ];
+
+    var itemList = ItemListModel(orders: orders);
+
+    return (amount: amount, itemList: itemList);
   }
 }
 
