@@ -15,18 +15,35 @@ Here are some screenshots of the app in action:
  ![Screenshot_20240227_034933_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/d9da4448-8777-444b-b8fc-f4805cd8eaca)
 
 2. ### Payment Details Screen
-
-![Screenshot_20240228_055413_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/081cadf0-cc13-4d2d-941e-4a389b6e139b)
-
-
-3. ### Success Payment Screen
+ 2.1
+   ![Screenshot_20240228_055413_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/081cadf0-cc13-4d2d-941e-4a389b6e139b)
 
 
-![Screenshot_20240228_082737_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/57eb1ac0-3504-403c-a9be-575a50bd7df4)
+2.2
+
+   ![Screenshot_20240302_173859_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/b9840ea9-470c-428b-a0cf-492d0388c0ce)
 
 
-  
+3. ### Add Card Details Screen
+   
 
+    3.1
+     ![Screenshot_20240302_173908_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/1ef760ac-d76f-47c1-ab66-07b2fd38a371)
+
+    3.2
+     ![Screenshot_20240302_173932_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/f5e412e2-8022-4515-b4b6-a0819270ba39)
+ 
+
+5. ### Success Payment Screen
+
+   ![Screenshot_20240228_082737_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/57eb1ac0-3504-403c-a9be-575a50bd7df4)
+
+
+
+
+6. ### Save Card Details
+
+![Screenshot_20240302_173945_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/69c4e3f8-3fb8-493f-ab65-1d612a1aba14)
 
 
 
