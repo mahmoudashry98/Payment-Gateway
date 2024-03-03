@@ -9,6 +9,8 @@ Payment Gateway  is a Flutter application designed to demonstrate seamless integ
 Here are some screenshots of the app in action:
 
 
+### Stripe Payment
+
 
 1. ### Cart Screen
 
@@ -46,6 +48,20 @@ Here are some screenshots of the app in action:
 ![Screenshot_20240302_173945_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/69c4e3f8-3fb8-493f-ab65-1d612a1aba14)
 
 
+
+### PayPal Payment
+ 
+1. ### Login PayPal
+   
+   ![Screenshot_20240303_110821_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/61dea6ef-ccf8-46ec-acc8-df5522e34ba1)
+
+2. ### Paypal procsee
+   
+   ![Screenshot_20240303_110836_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/61d5a01b-3955-47d1-99cd-74343722d672)
+
+3. ### Paypal Loading process
+
+  ![Screenshot_20240303_110842_com example payment_gateways](https://github.com/mahmoudashry98/Payment-Gateway/assets/83143927/000f1a5b-7798-4cd4-884e-c7d4f879ac47)
 
 ## Features
 
